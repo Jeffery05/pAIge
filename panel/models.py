@@ -47,10 +47,19 @@ class PortfolioAccomplishment(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=128)
-
-    issued_at = models.DateField(blank=True)
-
     description = models.TextField(blank=True)
 
     class Meta:
         abstract = True
+
+class PortfolioAccomplishmentIssuer(models.Model):
+    issuer = models.CharField(max_length=256)
+    issued_at = models.DateField(blank=True)
+
+    class Meta:
+        abstract = True
+
+class PortfolioHonorsAwards(PortfolioAccomplishmentIssuer):
+    pass
+class PortfolioTestScore(PortfolioAccomplishmentIssuer):
+    score = models.IntegerField()
