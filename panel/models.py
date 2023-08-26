@@ -31,17 +31,19 @@ class PortfolioExperience(models.Model):
     
     description = models.TextField(blank=True)
 
+class PortfolioVolunteering(PortfolioExperience):
+    causes = models.CharField(max_length=128, blank=True)
+
 class PortfolioEducation(PortfolioExperience):
     school = models.CharField(max_length=256)
     degree = models.CharField(max_length=256, blank=True)
     field = models.CharField(max_length=256, blank=True)
 
+    grade = models.CharField(max_length=256, blank=True)
+
     activities_societies = models.TextField()
 
     logo = models.ImageField(upload_to='portfolio_site_images', blank=True)
-
-from django.db import models
-
 
 class PortfolioAccomplishment(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
