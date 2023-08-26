@@ -1,8 +1,14 @@
-{% extends 'base.html' %} {% load static %} {% block main %}
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block main %}
 <h1 class="mb-4">Generate Your Website Now!</h1>
-<form method="POST" action="{% url 'submitted' %}">
-    {% csrf_token %}
-  <div class="form-group">
+{% comment %} <form method="POST" action="{% url 'submitted' %}"> {% endcomment %}
+<form method="POST" action="{% url 'generate' %}">
+  {% csrf_token %}
+  {% crispy form %}
+  {% comment %} <div class="form-group">
     <input
       type="text"
       class="form-control"
@@ -16,6 +22,6 @@
   </div>
   <button type="submit" class="btn btn-secondary mt-3" id="createWebsite">
     Submit
-  </button>
+  </button> {% endcomment %}
 </form>
 {% endblock %}
