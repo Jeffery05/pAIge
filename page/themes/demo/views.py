@@ -4,5 +4,5 @@ from django.views.generic.base import TemplateView
 
 
 class IndexView(TemplateView):
-    template_name = "themes:demo:index.html"
+    template_name = "themes;demo;index.html"
     title = "Home"

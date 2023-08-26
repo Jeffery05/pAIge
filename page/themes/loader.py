@@ -10,7 +10,7 @@ from . import themes
 
 class Loader(FilesystemLoader):
     def get_template_sources(self, template_name):
-        template_path = template_name.split(":")
+        template_path = template_name.split(";")
         if (
             len(template_path) == 3
             and template_path[0] == "themes"
