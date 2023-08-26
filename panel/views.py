@@ -3,7 +3,7 @@ from django.views.generic.base import ContextMixin, TemplateView
 from django.views.generic.edit import FormView
 
 from . import forms, utils
-from .models import PortfolioSite
+from .models import Portfolio
 
 
 class TitleMixin(ContextMixin):
@@ -35,7 +35,7 @@ class GenerateView(FormView, TitleMixin):
     success_url = "/submitted"
 
     def form_valid(self, form):
-        PortfolioSite.create_from_profile(form.cleaned_data["profile_url"])
+        Portfolio.create_from_profile(form.cleaned_data["profile_url"])
 
         return super().form_valid(form)
 

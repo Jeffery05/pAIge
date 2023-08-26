@@ -1,6 +1,7 @@
 from django.db import models
 
 from .portfolio import (
+    Portfolio,
     PortfolioArticle,
     PortfolioCertification,
     PortfolioCourse,
@@ -14,7 +15,6 @@ from .portfolio import (
     PortfolioProject,
     PortfolioPublication,
     PortfolioRecommendation,
-    PortfolioSite,
     PortfolioTestScore,
     PortfolioVolunteerWork,
 )

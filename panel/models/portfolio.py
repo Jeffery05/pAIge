@@ -1,9 +1,12 @@
+import random
 import secrets
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.sites.models import Site
 from django.db import models
+
+from page.themes import themes
 
 from .. import utils
 from .abstract import (
@@ -27,9 +30,12 @@ def pfp_upload_path(instance, filename):
     return utils.file_upload_path_generator("pfp")(instance, filename)
 
 
-class PortfolioSite(models.Model):
+class Portfolio(models.Model):
     owner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
-    site = models.ForeignKey(Site, on_delete=models.RESTRICT)
+    site = models.OneToOneField(
+        Site, related_name="portfolio", on_delete=models.RESTRICT
+    )
+    theme = models.CharField(max_length=16)
 
     linkedin_id = models.CharField(max_length=64)
 
@@ -59,6 +65,7 @@ class PortfolioSite(models.Model):
         linkedin_url,
         owner=None,
         domain=settings.PORTFOLIO_DOMAIN.format(secrets.token_hex(4)),
+        theme=random.choice(list(themes.keys())),
     ):
         site = Site.objects.create(domain=domain, name=f"Portfolio {domain}")
 
@@ -67,7 +74,11 @@ class PortfolioSite(models.Model):
         # background_cover_url = portfolio_data["header"].pop("background_cover_url")
 
         portfolio = cls.objects.create(
-            owner=owner, source_url=linkedin_url, site=site, **portfolio_data["header"]
+            owner=owner,
+            source_url=linkedin_url,
+            site=site,
+            theme=theme,
+            **portfolio_data["header"],
         )
 
         if profile_pic_url is not None:

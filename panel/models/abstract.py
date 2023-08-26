@@ -4,7 +4,7 @@ from .. import utils
 
 
 class PortfolioItem(models.Model):
-    portfolio = models.ForeignKey("PortfolioSite", on_delete=models.CASCADE)
+    portfolio = models.ForeignKey("Portfolio", on_delete=models.CASCADE)
 
     class Meta:
         abstract = True

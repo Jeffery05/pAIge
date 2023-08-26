@@ -25,7 +25,9 @@ SECRET_KEY = "change me"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+ALLOWED_PANEL_HOSTS = []
 
 
 # Application definition
@@ -44,9 +46,11 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "panel",
+    "page",
 ]
 
 MIDDLEWARE = [
+    "page.middleware.PortfolioMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -61,14 +65,20 @@ ROOT_URLCONF = "paige.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
-        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+            ],
+            "loaders": [
+                (
+                    "django.template.loaders.filesystem.Loader",
+                    [BASE_DIR / "templates"],
+                ),
+                "django.template.loaders.app_directories.Loader",
+                "page.themes.loader.Loader",
             ],
         },
     },
@@ -160,7 +170,7 @@ STATIC_URL = "static/"
 
 # Sites framework
 
-SITE_ID = 1
+DEFAULT_SITE_ID = 1
 
 # Crispy forms
 
@@ -177,6 +187,16 @@ PROXYCURL_API_KEY = "change me"
 # Portfolio site settings
 
 PORTFOLIO_DOMAIN = "{}.example.com"
+
+# Page settings
+
+INSTALLED_THEMES = ["page.themes.demo"]
+
+DEBUG_PORTFOLIO_ID = None
+
+# Misc settings
+
+USE_X_FORWARDED_HOST = True
 
 # Custom settings
 
