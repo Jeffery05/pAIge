@@ -48,6 +48,7 @@ body {
     border-radius: 3%;
     background-color:#333;
     overflow: hidden;
+    color:#ffffff;
 }
 
 .card-image {

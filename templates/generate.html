@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% load static %} {% block main %}
+<h1 class="mb-4">Generate Your Website Now!</h1>
+<form method="POST" action="{% url 'submitted' %}">
+    {% csrf_token %}
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      id="LinkedInUsername"
+      aria-describedby="LinkedInUsername"
+      placeholder="Enter LinkedIn Username"
+    />
+    <small id="userHelp" class="form-text" style="color: white"
+      >We'll use the info from your LinkedIn to create your website!</small
+    >
+  </div>
+  <button type="submit" class="btn btn-secondary mt-3" id="createWebsite">
+    Submit
+  </button>
+</form>
+{% endblock %}

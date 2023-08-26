@@ -25,9 +25,9 @@
                         type="image/icon type"
                     />
                     <nav class="nav nav-masthead justify-content-center">
-                        <a class="nav-link active" href="#">Home</a>
-                        <a class="nav-link" href="about.html">About</a>
-                        <a class="nav-link" href="generate.html">Generate</a>
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                        <a class="nav-link" href="{% url 'generate' %}">Generate</a>
                     </nav>
                 </div>
             </header>

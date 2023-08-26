@@ -22,5 +22,9 @@ class AboutView(TemplateView, TitleMixin):
     title = "About"
 
 class GenerateView(TemplateView, TitleMixin):
-    template_name = "generator.html"
+    template_name = "generate.html"
     title = "Generate"
+
+class SubmittedView(TemplateView, TitleMixin):
+    template_name = "submitted.html"
+    title = "Submitted"

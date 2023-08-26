@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% load static %} {% block main %}
+<h1 class="mb-5">How It Works:</h1>
+<hr style="color: #ffffff; background-color: #ffffff; height: 2px" />
+
+
+
+<div class="row mt-5">
+  <div class="col-lg-4 d-flex align-items-stretch">
+    <div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h3 class="card-text">Step 1</h3>
+        <hr style="color: #ffffff; background-color: #ffffff; height: 1px" />
+        <p class="card-text">
+          Connect your LinkedIn profile via your username.
+        </p>
+        <img
+          src="{% static 'images/LinkedIn.png' %}"
+          class="card-image card-img-bottom"
+          alt="..."
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 d-flex align-items-stretch">
+    <div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h3 class="card-text">Step 2</h3>
+        <hr style="color: #ffffff; background-color: #ffffff; height: 1px" />
+        <p class="card-text">Our AI analyzes your LinkedIn data.</p>
+
+        <img
+          src="{% static 'images/AI.png' %}"
+          class="card-image card-img-bottom"
+          alt="..."
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 d-flex align-items-stretch">
+    <div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h3 class="card-text">Step 3</h3>
+        <hr style="color: #ffffff; background-color: #ffffff; height: 1px" />
+        <p class="card-text">Your personal website is generated.</p>
+        <img
+          src="{% static 'images/CheckMark.png' %}"
+          class="card-image card-img-bottom"
+          alt="..."
+        />
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
