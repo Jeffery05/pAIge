@@ -46,7 +46,7 @@ class PortfolioItemOrganization(models.Model):
 
 
 class PortfolioItemDuration(models.Model):
-    starts_at = models.DateField()
+    starts_at = models.DateField(blank=True, null=True)
     ends_at = models.DateField(blank=True, null=True)
 
     class Meta:
