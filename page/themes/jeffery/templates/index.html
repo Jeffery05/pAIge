@@ -24,13 +24,6 @@
   <!-- Template Main CSS File -->
   <link href="{% static 'themes/jeffery/css/style.css'%}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: iPortfolio
-  * Updated: Jul 27 2023 with Bootstrap v5.3.1
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -122,13 +115,13 @@
               <p>{{ education.description }}</p>
             </div>
             {% endfor %}
-            <h3 class="resume-title">Test Scores</h3>
-              {% for score in portfolio.portfoliotestscore.all %}
+            <h3 class="resume-title">Skills</h3>
+              {% for skill in portfolio.portfolioskill.all %}
             <div class="resume-item pb-0">
-              <h4>{{ score.title }}</h4>
-              <h5>{{ score.date }}</h5>
+              <h4>{{ skill.title }}</h4>
+              <!-- <h5>{{ score.date }}</h5>
               <p><em>Score: {{ score.number }}</em></p>
-              <p>{{ score.description }}</p>
+              <p>{{ score.description }}</p> -->
             </div>
             {% endfor %}
           </div>
