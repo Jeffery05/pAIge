@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.sites.models import Site
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.base import ContextMixin, TemplateView
@@ -92,3 +94,11 @@ class PortfolioEditView(UserPassesTestMixin, UpdateView):
         portfolio = self.get_object()
 
         return self.request.user == portfolio.owner
+
+def ask_endpoint(request):
+    try:
+        Site.objects.get(domain=request.GET.get('domain'))
+        return HttpResponse(status=200)
+    except Site.DoesNotExist:
+        return HttpResponse(status=404)
+    

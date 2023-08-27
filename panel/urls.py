@@ -13,4 +13,5 @@ urlpatterns = [
         views.PortfolioEditView.as_view(),
         name="portfolio_edit",
     ),
+    path("check", views.ask_endpoint, name="check"),
 ]
