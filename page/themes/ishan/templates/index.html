@@ -1,0 +1,159 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title> {{portfolio.first_name}} {{portfolio.last_name}} Personal Portfolio</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'themes/ishan/assets/favicon.ico' %}" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+        <link href="{% static 'themes/ishan/css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: var(--bs-primary);" id="sideNav">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                <span class="d-block d-lg-none">{{portfolio.first_name}} {{portfolio.last_name}}</span>
+                {% if portfolio.profile_pic %}
+                    <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ portfolio.profile_pic.url }}" alt="..." /></span>
+                {% else %}
+                    <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="https://th.bing.com/th/id/OIP.Q-ZRtH2jCAePPB7VN76XqQHaHa?pid=ImgDet&rs=1" alt="..." /></span>
+                {% endif %}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                    {% if portfolio.portfolioexperience %}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li> {%endif%}
+                    {% if portfolio.portfolioeducation %}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li> {%endif%}
+                    {% if portfolio.portfoliovolunteerwork%}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#volunteering">Volunteering</a></li> {%endif%}
+                    {% if portfolio.portfoliohonoraward or portfolio.portfoliocertification%}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li> {%endif%}
+                </ul>
+            </div>
+        </nav>
+        <!-- Page Content-->
+        <div class="container-fluid p-0">
+            <!-- About-->
+            <section class="resume-section" id="about">
+
+                <div class="resume-section-content">
+                    <h1 class="mb-0">
+                        {{ portfolio.first_name }}
+                        <span style="color: var(--bs-primary);">{{ portfolio.last_name }}</span>
+                    </h1>
+                    <div class="subheading mb-5">
+                        {{ portfolio.occupation }}
+                    </div>
+                    <p class="lead mb-5">{{portfolio.summary}}</p>
+                    <div class="social-icons">
+                        <a class="social-icon" href="{{ portfolio.source_url }}"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Experience-->
+            {% if portfolio.portfolioexperience %}
+            <section class="resume-section" id="experience">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Experience</h2>
+
+                    {% for experience in portfolio.portfolioexperience.all %}
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">{{experience.title}}</h3>
+                            <div class="subheading mb-3">{{experience.organization}}</div>
+                            <p>{{experience.description|linebreaksbr}}</p>
+                        </div>
+                        <div class="flex-shrink-0"><span style="color: var(--bs-primary);">{{experience.starts_at}} - {{experience.ends_at}}</span></div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </section>
+            {%endif%}
+            <!-- Education-->
+            {% if portfolio.portfolioeducation %}
+            <section class="resume-section" id="education">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Education</h2>
+
+                    {% for education in portfolio.portfolioeducation.all %}
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">{{education.organization}}</h3>
+                            <div class="subheading mb-3">{{education.title}}</div>
+                            <div>{{education.field}}</div>
+                            {% if education.grade %}
+                            <p>GPA: {{education.grade}}</p>
+                            {% endif %}
+                        </div>
+                        <div class="flex-shrink-0"><span style="color: var(--bs-primary);">{{education.starts_at}} - {{education.ends_at}}</span></div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </section>
+            {%endif%}
+            <hr class="m-0" />
+            {% if portfolio.portfoliovolunteerwork %}
+             <!-- Volunteering-->
+             <section class="resume-section" id="volunteering">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Volunteering</h2>
+
+                    {% for vol in portfolio.portfoliovolunteerwork.all %}
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0">{{vol.title}}</h3>
+                            <div class="subheading mb-3">{{vol.organization}} - {{vol.cause}}</div>
+                            <p>{{vol.description}}</p>
+                        </div>
+                        <div class="flex-shrink-0"><span style="color: var(--bs-primary);">{{vol.starts_at}} - {{vol.end_at}}</span></div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </section>
+            <hr class="m-0" />
+            {% endif %}
+            {% if portfolio.portfoliohonoraward or portfolio.portfoliocertification%}
+            <!-- Awards-->
+            <section class="resume-section" id="awards">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Awards & Certifications</h2>
+                    <ul class="fa-ul mb-0">
+
+                        {% if portfolio.portfoliocertification%}
+                        {% for cert in portfolio.portfoliocertification.all %}
+                        <li>
+                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
+                            <b>{{cert.organization}} {{cert.title}} (ID:{{cert.number}})</b>
+                        </li>
+                        {% endfor %}
+                        {%endif%}
+
+                        {% if portfolio.portfoliohonoraward%}
+                        {% for award in portfolio.portfoliohonoraward.all %}
+                        <li>
+                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
+                            <b>{{award.title}} - {{award.organization}} - {{award.date}}</b>
+                            <p>{{award.description}}</p>
+                        </li>
+                        {% endfor %}
+                        {%endif%}
+                    </ul>
+                </div>
+            </section>
+            {%endif%}
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'themes/ishan/js/scripts.js' %}"></script>
+    </body>
+</html>
