@@ -142,7 +142,7 @@ class Portfolio(models.Model):
             "projects": PortfolioProject,
             "test_scores": PortfolioTestScore,
             "certifications": PortfolioCertification,
-            "recommendations": PortfolioRecommendation,
+            # "recommendations": PortfolioRecommendation,
             "interests": PortfolioInterest,
             "skills": PortfolioSkill,
         }
