@@ -15,6 +15,7 @@ from .portfolio import (
     PortfolioProject,
     PortfolioPublication,
     PortfolioRecommendation,
+    PortfolioSkill,
     PortfolioTestScore,
     PortfolioVolunteerWork,
 )

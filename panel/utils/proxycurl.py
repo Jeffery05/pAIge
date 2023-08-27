@@ -8,11 +8,26 @@ from .ai import chat
 RECOMMENDATION_SPLIT_STRING = "\n\n      \n          \n          \n\n\n\n              \n                \n        \n              \n  \n\n      \n          "
 
 
+LINKEDIN_API_EXPLAINATION = {
+    "experiences": "the experiences",
+    "education": "the educational institutions attended",
+    "publications": "their publications",
+    "honors_awards": "their awards",
+    "patents": "their patents",
+    "recommendations": "the recommendations",
+    "volunteer_work": "the volunteer work",
+}
+
+CHATGPT_REWORD_PROMPT = "I want to write a description for an activity I have. If any part of it sounds bad, then reword it without falsifying any info. Do not make it too long, and do not add an intro or ending:"
+CHATGPT_SUMMARY_PROMPT = "I want to write a SHORT paragraph for my professional portfolio. Heres the content to use to write it (make it 3 sentences max, make the paragraph wholistic by focusing on the important skills, and don't falsify anything):"
+CHATGPT_SKILLS_PROMPT = "Generate a bullet-point list of technical skills from this text (focus on technical skills that are mentioned multiple times and are applicable to the engineering and technology industry):"
+
+
 def _clean_str(s, empty=""):
     if s is None or s == "":
         return empty
 
-    return s.replace("\n", " ").replace("\r", " ").strip()
+    return s.replace("\r", "").strip()
 
 
 def _clean_date(d):
@@ -20,6 +35,10 @@ def _clean_date(d):
         return None
 
     return datetime.date(d["year"], d["month"], d["day"])
+
+
+def _no_newline(s):
+    return s.replace("\n", " ")
 
 
 def fetch_linkedin_profile(linkedin_url):
@@ -36,9 +55,9 @@ def fetch_linkedin_profile(linkedin_url):
         "header": {
             "linkedin_id": _clean_str(data["public_identifier"]),
             "profile_pic_url": _clean_str(data["profile_pic_url"], empty=None),
-            # "background_cover_url": _clean_str(
-            #     data["background_cover_image"], empty=None
-            # ),
+            "background_cover_url": _clean_str(
+                data["background_cover_image_url"], empty=None
+            ),
             "first_name": _clean_str(data["first_name"]),
             "last_name": _clean_str(data["last_name"]),
             "occupation": _clean_str(data["occupation"]),
@@ -193,64 +212,28 @@ def fetch_linkedin_profile(linkedin_url):
             for article in data["articles"]
         ],
         "interests": [{"title": interest} for interest in data["interests"]],
-        
     }
 
-    # With chat() and linkedin_data, generate some stuff
-    # suggestion skills: {"title": "Skill Title", "description": "Skill description"}
-    def getDescriptions():
-        finalString = ""
-        '''for k, v in data.items():
-            if 'description' in v:
-                final_string += v['description']'''
-        if(data['experiences']):
-            finalString  += "Here are all the experiences:"
-            for item in data["experiences"]:
-                finalString  += item['description']
-        if(data['education']):
-            finalString  += "Here are all the educational institutions attended:"
-            for item in data["education"]:
-                finalString  += item['description']
-        if(data['accomplishment_organisations']):
-            finalString  += "Here are all the organizations they're part of:"
-            for item in data["accomplishment_organisations"]:
-                finalString  += item['description']
-        if(data['accomplishment_publications']):
-            finalString  += "Here are all their publications:"
-            for item in data["accomplishment_publications"]:
-                finalString  += item['description']
-        if(data['accomplishment_honors_awards']):
-            finalString  += "Here are all their awards:"
-            for item in data["accomplishment_honors_awards"]:
-                finalString  += item['description']
-        if(data['accomplishment_patents']):
-            finalString  += "Here are all their patents:"
-            for item in data['accomplishment_patents']:
-                finalString  += item['description']
-        if data['recommendations']:
-            finalString  += "Here are all the recommendations:\n"
-            for item in data['recommendations']:
-                finalString  += item.split(RECOMMENDATION_SPLIT_STRING)[1]
-        if data['volunteer_work']:
-            finalString  += "Here are all the volunteer work:\n"
-            for item in data['volunteer_work']:
-                finalString  += item['description']
-        return finalString
-
-    reword = "I want to write a description for an activity I have. If any part of it sounds bad, then reword it without falsifying any info. Do not make it too long, and do not add an intro or ending:"
-    getSummary = "I want to write a SHORT paragraph for my professional portfolio. Heres the content to use to write it (make it 3 sentences max, make the paragraph wholistic by focusing on the important skills, and don't falsify anything): "
-    getSkills = "Generate a bullet-point list of technical skills from this text (focus on technical skills that are mentioned multiple times and are applicable to the engineering and technology industry): "
+    chatgpt_context = ""
+    for item_type, explaination in LINKEDIN_API_EXPLAINATION.items():
+        if len(linkedin_data[item_type]) > 0:
+            chatgpt_context += f"Here are all {explaination}:\n"
+            for item in linkedin_data[item_type]:
+                if item_type == "recommendations":
+                    chatgpt_context += f'- {_no_newline(item["author"])}: {_no_newline(item["description"])}\n'
+                else:
+                    chatgpt_context += f'- {_no_newline(item["title"])}: {_no_newline(item["description"])}\n'
 
     if data["summary"] is None:
-        summary = chat(getSummary, getDescriptions())
-        linkedin_data['header']['summary'] = summary
+        linkedin_data["header"]["summary"] = _clean_str(chat(f"{CHATGPT_SUMMARY_PROMPT}\n\n{chatgpt_context}"))
 
-    skillsList = chat(getSkills, getDescriptions()).replace("\n", "").split("- ")
-    linkedin_data['skills'] = [
-        {
-            "title": skill
-        }
-        for skill in skillsList
-    ]
+    skills = (
+        chat(f"{CHATGPT_SKILLS_PROMPT}\n\n{chatgpt_context}")
+        .replace("\n", "")
+        .strip("- ")
+        .split("- ")
+    )
+    print(skills)
+    linkedin_data["skills"] = [{"title": _clean_str(skill)} for skill in skills]
 
     return linkedin_data

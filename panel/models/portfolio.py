@@ -56,7 +56,7 @@ class Portfolio(models.Model):
     summary = models.TextField(blank=True)
 
     profile_pic = models.ImageField(upload_to=pfp_upload_path, blank=True)
-    # background_cover_image = models.ImageField(upload_to=pfp_upload_path, blank=True)
+    background_cover_image = models.ImageField(upload_to=pfp_upload_path, blank=True)
     source_url = models.URLField()
 
     @classmethod
@@ -65,7 +65,7 @@ class Portfolio(models.Model):
         linkedin_url,
         owner=None,
         domain=None,
-        theme=None,  # Probably messing with bugs
+        theme=None,
     ):
         if domain is None:
             domain = settings.PORTFOLIO_DOMAIN.format(secrets.token_hex(4))
@@ -74,7 +74,7 @@ class Portfolio(models.Model):
 
         portfolio_data = utils.fetch_linkedin_profile(linkedin_url)
         profile_pic_url = portfolio_data["header"].pop("profile_pic_url")
-        # background_cover_url = portfolio_data["header"].pop("background_cover_url")
+        background_cover_url = portfolio_data["header"].pop("background_cover_url")
 
         if theme is None:
             theme = random.choice(list(themes.keys()))
@@ -90,8 +90,8 @@ class Portfolio(models.Model):
         if profile_pic_url is not None:
             portfolio.profile_pic = utils.download_file(profile_pic_url)
 
-        # if background_cover_url is not None:
-        #     portfolio.background_cover_image = utils.download_file(background_cover_url)
+        if background_cover_url is not None:
+            portfolio.background_cover_image = utils.download_file(background_cover_url)
 
         portfolio.save()
 
@@ -117,6 +117,7 @@ class Portfolio(models.Model):
             "certifications": PortfolioCertification,
             "recommendations": PortfolioRecommendation,
             "interests": PortfolioInterest,
+            "skills": PortfolioSkill,
         }
 
         for itemtype_name, itemtype_model in portfolio_logo_items.items():
@@ -284,4 +285,8 @@ class PortfolioArticle(
 
 
 class PortfolioInterest(PortfolioItem, PortfolioItemTitle):
+    pass
+
+
+class PortfolioSkill(PortfolioItem, PortfolioItemTitle):
     pass
