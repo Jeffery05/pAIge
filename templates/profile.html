@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% load static %} {% block main %}
+<h1>Your websites</h1>
+<hr />
+{% if portfolios %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for portfolio in portfolios %}
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{{ portfolio.url }}">{{ portfolio.site.domain }}</a>
+        </h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Based on
+          <a
+            class="link-secondary link-offset-1 link-underline-opacity-25 link-underline-opacity-100-hover"
+            href="{{ portfolio.source_url }}"
+            >{{ portfolio.linkedin_id }}</a
+          >
+          on Linkedin
+        </li>
+        <li class="list-group-item">
+          {{ portfolio.theme|title }} theme
+        </li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="btn btn-primary">Settings</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>You have no websites yet. :(</p>
+<a class="btn btn-primary btn-lg" href="{% url 'generate' %}"
+  >Get your website</a
+>
+{% endif %} {% endblock %}

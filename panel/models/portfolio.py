@@ -1,4 +1,5 @@
 import random
+import re
 import secrets
 
 from django.conf import settings
@@ -58,6 +59,26 @@ class Portfolio(models.Model):
     profile_pic = models.ImageField(upload_to=pfp_upload_path, blank=True)
     background_cover_image = models.ImageField(upload_to=pfp_upload_path, blank=True)
     source_url = models.URLField()
+
+    def assign_owner(self, user, fail_silently=False):
+        if self.owner is not None:
+            if fail_silently:
+                return
+            
+            raise ValueError("Portfolio already has an owner")
+        
+        self.owner = user
+
+        new_domain = settings.PORTFOLIO_DOMAIN.format(re.sub(r'[^A-Za-z0-9 ]+', '', user.username).lower())
+
+        try:
+            Site.objects.get(domain=new_domain)
+        except Site.DoesNotExist:
+            self.site.domain = new_domain
+            self.site.name = f"Portfolio {new_domain}"
+            self.site.save()
+        
+        self.save()
 
     @property
     def url(self):

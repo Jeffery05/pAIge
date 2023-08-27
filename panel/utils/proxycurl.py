@@ -213,7 +213,11 @@ def fetch_linkedin_profile(linkedin_url):
             for article in data["articles"]
         ],
         "interests": [{"title": interest} for interest in data["interests"]],
+        "skills": [],
     }
+
+    if settings.OPENAI_API_KEY is None:
+        return linkedin_data
 
     chatgpt_context = ""
     for item_type, explaination in LINKEDIN_API_EXPLAINATION.items():

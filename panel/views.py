@@ -1,8 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
+from django.views.generic import ListView
 from django.views.generic.base import ContextMixin, TemplateView
 from django.views.generic.edit import FormView
 
-from . import forms, utils
+from . import forms, models, utils
 from .models import Portfolio
 
 
@@ -59,3 +61,20 @@ class PreviewView(TemplateView, TitleMixin):
         if portfolio_pk:
             context["portfolio"] = Portfolio.objects.get(pk=portfolio_pk)
         return context
+
+class ProfileView(LoginRequiredMixin, ListView):
+    context_object_name = "portfolios"
+    template_name = "profile.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        portfolio_pk = request.session.get("anonymous_site_generated")
+        if portfolio_pk:
+            del request.session["anonymous_site_generated"]
+
+            portfolio = Portfolio.objects.get(pk=portfolio_pk)
+            portfolio.assign_owner(request.user)
+            
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return models.Portfolio.objects.filter(owner=self.request.user)

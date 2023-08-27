@@ -48,10 +48,16 @@
               <a class="nav-link" href="{% url 'about' %}">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'generate' %}">Get Started</a>
+              <a class="nav-link" href="{% url 'generate' %}">
+                {% if user.is_authenticated %}
+                Generate a site
+                {% else %}
+                Get Started
+                {% endif %}
+              </a>
             </li>
           </ul>
-          <ul class="navbar-nav ms-auto my-auto">
+          <ul class="navbar-nav ms-auto my-auto me-2">
             {% if user.is_authenticated %}
             <li class="nav-item dropdown d-flex">
               <a
@@ -64,6 +70,18 @@
                 Signed in as {{ user.username }}
               </a>
               <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'profile' %}"
+                    >My sites</a
+                  >
+                </li>
+                {% if user.is_staff %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'admin:index' %}"
+                    >Admin</a
+                  >
+                </li>
+                {% endif%}
                 <li>
                   <a class="dropdown-item" href="{% url 'account_logout' %}"
                     >Sign Out</a
