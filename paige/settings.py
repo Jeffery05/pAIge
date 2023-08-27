@@ -190,7 +190,7 @@ PORTFOLIO_DOMAIN = "{}.example.com"
 
 # Page settings
 
-INSTALLED_THEMES = ["page.themes.demo"]
+INSTALLED_THEMES = ["page.themes.demo", "page.themes.josh"]
 
 DEBUG_PORTFOLIO_ID = None
 
