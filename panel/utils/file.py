@@ -16,7 +16,9 @@ def file_upload_path_generator(path):
 
 def download_file(url):
     resp = requests.get(url)
-    resp.raise_for_status()
+
+    if not resp.ok:
+        return None
 
     url_path = Path(urlparse(url).path)
     file_name = url_path.name
