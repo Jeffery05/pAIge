@@ -21,7 +21,7 @@ LINKEDIN_API_EXPLAINATION = {
 
 CHATGPT_REWORD_PROMPT = "I want to write a description for an activity I have. If any part of it sounds bad, then reword it without falsifying any info. Do not make it too long, and do not add an intro or ending:"
 CHATGPT_SUMMARY_PROMPT = "I want to write a SHORT paragraph for my professional portfolio. Heres the content to use to write it (make it 3 sentences max, make the paragraph wholistic by focusing on the important skills, and don't falsify anything):"
-CHATGPT_SKILLS_PROMPT = "Generate a bullet-point list of technical skills from this text (focus on technical skills that are mentioned multiple times and are applicable to the engineering and technology industry):"
+CHATGPT_SKILLS_PROMPT = "Generate a bullet-point list of technical skills from this text (focus on technical skills that are applicable to industry, stuff like programming languages and softwares i have experience with):"
 
 
 def _clean_str(s, empty=""):
@@ -240,5 +240,4 @@ def fetch_linkedin_profile(linkedin_url):
         linkedin_data["skills"] = [{"title": _clean_str(skill)} for skill in skills]
     except ServiceUnavailableError:
         pass
-
     return linkedin_data
