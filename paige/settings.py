@@ -184,6 +184,10 @@ PROXYCURL_API_ENDPOINT = "https://nubela.co/proxycurl/api/v2/linkedin"
 
 PROXYCURL_API_KEY = "change me"
 
+# OpenAI settings
+
+OPENAI_API_KEY = "change me"
+
 # Portfolio site settings
 
 PORTFOLIO_DOMAIN = "{}.example.com"

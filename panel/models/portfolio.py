@@ -64,14 +64,20 @@ class Portfolio(models.Model):
         cls,
         linkedin_url,
         owner=None,
-        domain=settings.PORTFOLIO_DOMAIN.format(secrets.token_hex(4)),
-        theme=random.choice(list(themes.keys())),
+        domain=None,
+        theme=None,  # Probably messing with bugs
     ):
+        if domain is None:
+            domain = settings.PORTFOLIO_DOMAIN.format(secrets.token_hex(4))
+
         site = Site.objects.create(domain=domain, name=f"Portfolio {domain}")
 
         portfolio_data = utils.fetch_linkedin_profile(linkedin_url)
         profile_pic_url = portfolio_data["header"].pop("profile_pic_url")
         # background_cover_url = portfolio_data["header"].pop("background_cover_url")
+
+        if theme is None:
+            theme = random.choice(list(themes.keys()))
 
         portfolio = cls.objects.create(
             owner=owner,

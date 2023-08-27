@@ -3,6 +3,8 @@ import datetime
 import requests
 from django.conf import settings
 
+from .ai import chat
+
 RECOMMENDATION_SPLIT_STRING = "\n\n      \n          \n          \n\n\n\n              \n                \n        \n              \n  \n\n      \n          "
 
 
@@ -30,7 +32,7 @@ def fetch_linkedin_profile(linkedin_url):
 
     data = resp.json()
 
-    return {
+    linkedin_data = {
         "header": {
             "linkedin_id": _clean_str(data["public_identifier"]),
             "profile_pic_url": _clean_str(data["profile_pic_url"], empty=None),
@@ -192,3 +194,8 @@ def fetch_linkedin_profile(linkedin_url):
         ],
         "interests": [{"title": interest} for interest in data["interests"]],
     }
+
+    # With chat() and linkedin_data, generate some stuff
+    # suggestion skills: {"title": "Skill Title", "description": "Skill description"}
+
+    return linkedin_data
