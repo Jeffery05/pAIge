@@ -111,10 +111,10 @@
                 <div class="resume-section-content">
                     <h2 class="mb-5">Skills</h2>
                     <ul class="fa-ul mb-0">
-                        {% for vol in portfolio.portfolioskills.all %}
+                        {% for sk in portfolio.portfolioskills.all %}
                         <li>
                             <span class="fa-li"><i class="fas fa-check"></i></span>
-                            {{skills.title}}
+                            {{sk.title}}
                         </li>
                         {% endfor %}
                     </ul>
