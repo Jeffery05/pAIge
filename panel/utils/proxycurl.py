@@ -241,9 +241,12 @@ def fetch_linkedin_profile(linkedin_url):
     getSummary = "I want to write a SHORT paragraph for my professional portfolio. Heres the content to use to write it (make it 3 sentences max, make the paragraph wholistic by focusing on the important skills, and don't falsify anything): "
     getSkills = "Generate a bullet-point list of technical skills from this text (focus on technical skills that are mentioned multiple times and are applicable to the engineering and technology industry): "
 
-    '''if data["summary"] is None:
-        summary = chat(getSummary, getDescriptions())'''
-    
+    if data["summary"] is None:
+        summary = chat(getSummary, getDescriptions())
+        linkedin_data['header'] = [
+            "summary": summary
+        ]
+
     skillsList = chat(getSkills, getDescriptions()).replace("\n", "").split("- ")
     linkedin_data['skills'] = [
         {

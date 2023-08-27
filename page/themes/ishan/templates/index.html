@@ -31,6 +31,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                     {% if portfolio.portfolioexperience %}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li> {%endif%}
                     {% if portfolio.portfolioeducation %}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li> {%endif%}
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
                     {% if portfolio.portfoliovolunteerwork%}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#volunteering">Volunteering</a></li> {%endif%}
                     {% if portfolio.portfoliohonoraward or portfolio.portfoliocertification%}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li> {%endif%}
                 </ul>
@@ -55,10 +56,11 @@
                     </div>
                 </div>
             </section>
-            <hr class="m-0" />
+            
             <!-- Experience-->
             {% if portfolio.portfolioexperience %}
             <section class="resume-section" id="experience">
+                <hr class="m-0" />
                 <div class="resume-section-content">
                     <h2 class="mb-5">Experience</h2>
 
@@ -76,8 +78,10 @@
                 </div>
             </section>
             {%endif%}
+
             <!-- Education-->
             {% if portfolio.portfolioeducation %}
+            <hr class="m-0" />
             <section class="resume-section" id="education">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Education</h2>
@@ -100,8 +104,27 @@
                 </div>
             </section>
             {%endif%}
+
             <hr class="m-0" />
+            <!-- Skills-->
+            <section class="resume-section" id="skills">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">Skills</h2>
+                    
+                    <div class="subheading mb-3">Workflow</div>
+                    <ul class="fa-ul mb-0">
+                        {% for vol in portfolio.portfolioskills.all %}
+                        <li>
+                            <span class="fa-li"><i class="fas fa-check"></i></span>
+                            {{skills.title}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+            
             {% if portfolio.portfoliovolunteerwork%}
+            <hr class="m-0" />
              <!-- Volunteering-->
              <section class="resume-section" id="volunteering">
                 <div class="resume-section-content">
