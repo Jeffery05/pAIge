@@ -15,7 +15,7 @@ LINKEDIN_API_EXPLAINATION = {
     "publications": "their publications",
     "honors_awards": "their awards",
     "patents": "their patents",
-    "recommendations": "the recommendations",
+    # "recommendations": "the recommendations",
     "volunteer_work": "the volunteer work",
 }
 
