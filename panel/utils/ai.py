@@ -1,6 +1,7 @@
 import openai
+from django.conf import settings
 
-openai.api_key = "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"
+openai.api_key = settings.OPENAI_API_KEY
 
 
 def chat(message, model="gpt-3.5-turbo"):
