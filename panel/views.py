@@ -1,10 +1,11 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.base import ContextMixin, TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import DeleteView, FormView, UpdateView
 
 from . import forms, models, utils
+from .forms import PortfolioForm
 from .models import Portfolio
 
 
@@ -51,7 +52,7 @@ class PreviewView(TemplateView, TitleMixin):
         portfolio_pk = request.session.get("anonymous_site_generated")
 
         if not portfolio_pk:
-            return redirect('generate')
+            return redirect("generate")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -61,6 +62,7 @@ class PreviewView(TemplateView, TitleMixin):
         if portfolio_pk:
             context["portfolio"] = Portfolio.objects.get(pk=portfolio_pk)
         return context
+
 
 class ProfileView(LoginRequiredMixin, ListView):
     context_object_name = "portfolios"
@@ -73,8 +75,20 @@ class ProfileView(LoginRequiredMixin, ListView):
 
             portfolio = Portfolio.objects.get(pk=portfolio_pk)
             portfolio.assign_owner(request.user)
-            
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         return models.Portfolio.objects.filter(owner=self.request.user)
+
+
+class PortfolioEditView(UserPassesTestMixin, UpdateView):
+    model = models.Portfolio
+    form_class = PortfolioForm
+    template_name = "portfolio_edit.html"
+    success_url = "/accounts/profile"
+
+    def test_func(self):
+        portfolio = self.get_object()
+
+        return self.request.user == portfolio.owner

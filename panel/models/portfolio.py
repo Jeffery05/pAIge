@@ -64,12 +64,14 @@ class Portfolio(models.Model):
         if self.owner is not None:
             if fail_silently:
                 return
-            
+
             raise ValueError("Portfolio already has an owner")
-        
+
         self.owner = user
 
-        new_domain = settings.PORTFOLIO_DOMAIN.format(re.sub(r'[^A-Za-z0-9 ]+', '', user.username).lower())
+        new_domain = settings.PORTFOLIO_DOMAIN.format(
+            re.sub(r"[^A-Za-z0-9 ]+", "", user.username).lower()
+        )
 
         try:
             Site.objects.get(domain=new_domain)
@@ -77,7 +79,7 @@ class Portfolio(models.Model):
             self.site.domain = new_domain
             self.site.name = f"Portfolio {new_domain}"
             self.site.save()
-        
+
         self.save()
 
     @property

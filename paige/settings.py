@@ -129,6 +129,10 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

@@ -1,0 +1,6 @@
+{% extends 'base.html' %} {% load static %} {% load crispy_forms_tags %} {% block main %}
+<h1>Edit portfolio {{ portfolio.site.domain }}</h1>
+<hr />
+{% crispy form %}
+
+{% endblock %}
