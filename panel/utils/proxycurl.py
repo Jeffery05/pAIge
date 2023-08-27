@@ -243,11 +243,7 @@ def fetch_linkedin_profile(linkedin_url):
 
     if data["summary"] is None:
         summary = chat(getSummary, getDescriptions())
-        linkedin_data['header'] = [
-            {
-                "summary": summary
-            }
-        ]
+        linkedin_data['header']['summary'] = summary
 
     skillsList = chat(getSkills, getDescriptions()).replace("\n", "").split("- ")
     linkedin_data['skills'] = [
