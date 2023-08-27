@@ -193,9 +193,63 @@ def fetch_linkedin_profile(linkedin_url):
             for article in data["articles"]
         ],
         "interests": [{"title": interest} for interest in data["interests"]],
+        
     }
 
     # With chat() and linkedin_data, generate some stuff
     # suggestion skills: {"title": "Skill Title", "description": "Skill description"}
+    def getDescriptions():
+        finalString = ""
+        '''for k, v in data.items():
+            if 'description' in v:
+                final_string += v['description']'''
+        if(data['experiences']):
+            finalString  += "Here are all the experiences:"
+            for item in data["experiences"]:
+                finalString  += item['description']
+        if(data['education']):
+            finalString  += "Here are all the educational institutions attended:"
+            for item in data["education"]:
+                finalString  += item['description']
+        if(data['accomplishment_organisations']):
+            finalString  += "Here are all the organizations they're part of:"
+            for item in data["accomplishment_organisations"]:
+                finalString  += item['description']
+        if(data['accomplishment_publications']):
+            finalString  += "Here are all their publications:"
+            for item in data["accomplishment_publications"]:
+                finalString  += item['description']
+        if(data['accomplishment_honors_awards']):
+            finalString  += "Here are all their awards:"
+            for item in data["accomplishment_honors_awards"]:
+                finalString  += item['description']
+        if(data['accomplishment_patents']):
+            finalString  += "Here are all their patents:"
+            for item in data['accomplishment_patents']:
+                finalString  += item['description']
+        if data['recommendations']:
+            finalString  += "Here are all the recommendations:\n"
+            for item in data['recommendations']:
+                finalString  += item.split(RECOMMENDATION_SPLIT_STRING)[1]
+        if data['volunteer_work']:
+            finalString  += "Here are all the volunteer work:\n"
+            for item in data['volunteer_work']:
+                finalString  += item['description']
+        return finalString
+
+    reword = "I want to write a description for an activity I have. If any part of it sounds bad, then reword it without falsifying any info. Do not make it too long, and do not add an intro or ending:"
+    getSummary = "I want to write a SHORT paragraph for my professional portfolio. Heres the content to use to write it (make it 3 sentences max, make the paragraph wholistic by focusing on the important skills, and don't falsify anything): "
+    getSkills = "Generate a bullet-point list of technical skills from this text (focus on technical skills that are mentioned multiple times and are applicable to the engineering and technology industry): "
+
+    '''if data["summary"] is None:
+        summary = chat(getSummary, getDescriptions())'''
+    
+    skillsList = chat(getSkills, getDescriptions()).replace("\n", "").split("- ")
+    linkedin_data['skills'] = [
+        {
+            "title": skill
+        }
+        for skill in skillsList
+    ]
 
     return linkedin_data

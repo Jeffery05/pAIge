@@ -88,8 +88,9 @@
                             <h3 class="mb-0">{{education.organization}}</h3>
                             <div class="subheading mb-3">{{education.title}}</div>
                             <div>{{education.field}}</div>
+                            <div>{{education.description}}</div>
                             {% if education.grade %}
-                            <p>GPA: {{education.grade}}</p>
+                            <p>Grade: {{education.grade}}</p>
                             {% endif %}
                         </div>
                         <div class="flex-shrink-0"><span style="color: var(--bs-primary);">{{education.starts_at}} - {{education.ends_at}}</span></div>
@@ -100,7 +101,7 @@
             </section>
             {%endif%}
             <hr class="m-0" />
-            {% if portfolio.portfoliovolunteerwork %}
+            {% if portfolio.portfoliovolunteerwork%}
              <!-- Volunteering-->
              <section class="resume-section" id="volunteering">
                 <div class="resume-section-content">

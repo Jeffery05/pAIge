@@ -3,16 +3,11 @@ from django.conf import settings
 
 openai.api_key = settings.OPENAI_API_KEY
 
-
-def chat(message, model="gpt-3.5-turbo"):
-    response = openai.ChatCompletion.create(
-        model=model,
+def chat(prompt,oldMsg):
+    msg = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
         messages=[
-            {
-                "role": "user",
-                "content": message,
-            }
-        ],
+            {"role": "user", "content": prompt +" "+ oldMsg}
+        ]
     )
-
-    return response["choices"][0]["message"]["content"]
+    return msg['choices'][0]['message']['content']
