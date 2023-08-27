@@ -2,6 +2,7 @@ import datetime
 
 import requests
 from django.conf import settings
+from openai.error import ServiceUnavailableError
 
 from .ai import chat
 
@@ -224,16 +225,20 @@ def fetch_linkedin_profile(linkedin_url):
                 else:
                     chatgpt_context += f'- {_no_newline(item["title"])}: {_no_newline(item["description"])}\n'
 
-    if data["summary"] is None:
-        linkedin_data["header"]["summary"] = _clean_str(chat(f"{CHATGPT_SUMMARY_PROMPT}\n\n{chatgpt_context}"))
+    try:
+        if data["summary"] is None:
+            linkedin_data["header"]["summary"] = _clean_str(
+                chat(f"{CHATGPT_SUMMARY_PROMPT}\n\n{chatgpt_context}")
+            )
 
-    skills = (
-        chat(f"{CHATGPT_SKILLS_PROMPT}\n\n{chatgpt_context}")
-        .replace("\n", "")
-        .strip("- ")
-        .split("- ")
-    )
-    print(skills)
-    linkedin_data["skills"] = [{"title": _clean_str(skill)} for skill in skills]
+        skills = (
+            chat(f"{CHATGPT_SKILLS_PROMPT}\n\n{chatgpt_context}")
+            .replace("\n", "")
+            .strip("- ")
+            .split("- ")
+        )
+        linkedin_data["skills"] = [{"title": _clean_str(skill)} for skill in skills]
+    except ServiceUnavailableError:
+        pass
 
     return linkedin_data

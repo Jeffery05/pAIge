@@ -59,6 +59,10 @@ class Portfolio(models.Model):
     background_cover_image = models.ImageField(upload_to=pfp_upload_path, blank=True)
     source_url = models.URLField()
 
+    @property
+    def url(self):
+        return settings.PORTFOLIO_INDEX_URL.format(domain=self.site.domain)
+
     @classmethod
     def create_from_profile(
         cls,

@@ -1,4 +1,5 @@
 {% load static %}
+{% load image %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,9 +43,7 @@
     <div class="d-flex flex-column">
 
       <div class="profile">
-        {% if portfolio.profile_pic %}
-        <img src="{{ portfolio.profile_pic.url }}" alt="" class="img-fluid rounded-circle">
-        {% endif %}
+        <img src="{{ portfolio.profile_pic|pfpfb }}" alt="" class="img-fluid rounded-circle">
         <h1 class="text-light"><a href="index.html">{{ portfolio.first_name }}</a></h1>
         <div class="social-links mt-3 text-center">
           <a href="{{ portfolio.source_url }}" class="linkedin"><i class="bx bxl-linkedin"></i></a>

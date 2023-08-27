@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Paige: {{ title }}</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+        {% block head %}{% endblock %}
+    </head>
+    <body class="text-center">
+        <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto">
+                <div class="inner">
+                    <a href="{% url 'index' %}">
+                        <image src="{% static 'images/pAIgenator_logo.png' %}" style="width: 140px; height: 70px; margin-right:75%;"></image>
+                    </link>
+                    
+                    <nav class="nav nav-masthead justify-content-center" style="font-size:larger">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                        <a class="nav-link" href="{% url 'generate' %}">Generate</a>
+                    </nav>
+                </div>
+            </header>
+
+            <div class="container">
+                <main role="main">
+                    {% block main %}
+                    {% endblock %}
+                    
+                </main>
+            </div>
+
+            <footer class="bg-dark text-white text-center py-3">
+                &copy; 2023 pAIgenator - Ignition Hacks 2023
+            </footer>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    </body>
+</html>

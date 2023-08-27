@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+<h1>Meet your new website!</h1>
+<hr>
+<p class="mt-4">
+  <a href="{{ portfolio.url }}" class="link-primary">See it live at {{ portfolio.url }}.</a>
+</p>
+<div class="ratio ratio-16x9 shadow">
+  <iframe src="{{ portfolio.url }}" title="Your new website!"></iframe>
+</div>
+<p class="mt-3">Don't like the look? We have more themes available for you to customize!</p>
+<a class="btn btn-primary mt-1" href="{% url 'account_signup' %}">Sign Up to Customize</a>
+{% endblock %}

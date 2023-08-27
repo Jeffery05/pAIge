@@ -192,6 +192,10 @@ OPENAI_API_KEY = "change me"
 
 PORTFOLIO_DOMAIN = "{}.example.com"
 
+PORTFOLIO_PFP_FALLBACK = "placeholder.jpeg"
+
+PORTFOLIO_INDEX_URL = "https://{domain}"
+
 # Page settings
 
 INSTALLED_THEMES = [

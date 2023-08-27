@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.generic.base import ContextMixin, TemplateView
 from django.views.generic.edit import FormView
 
@@ -32,14 +32,30 @@ class GenerateView(FormView, TitleMixin):
     template_name = "generate.html"
     form_class = forms.CreateSiteForm
     title = "Generate"
-    success_url = "/submitted"
+    success_url = "/preview"
 
     def form_valid(self, form):
-        Portfolio.create_from_profile(form.cleaned_data["profile_url"])
+        portfolio = Portfolio.create_from_profile(form.cleaned_data["profile_url"])
+        self.request.session["anonymous_site_generated"] = portfolio.pk
 
         return super().form_valid(form)
 
 
-class SubmittedView(TemplateView, TitleMixin):
-    template_name = "submitted.html"
-    title = "Submitted"
+class PreviewView(TemplateView, TitleMixin):
+    template_name = "preview.html"
+    title = "Preview your website!"
+
+    def dispatch(self, request, *args, **kwargs):
+        portfolio_pk = request.session.get("anonymous_site_generated")
+
+        if not portfolio_pk:
+            return redirect('generate')
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        portfolio_pk = self.request.session.get("anonymous_site_generated")
+        if portfolio_pk:
+            context["portfolio"] = Portfolio.objects.get(pk=portfolio_pk)
+        return context
