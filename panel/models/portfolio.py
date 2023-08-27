@@ -87,8 +87,8 @@ class Portfolio(models.Model):
             **portfolio_data["header"],
         )
 
-        #if profile_pic_url is not None:
-            #portfolio.profile_pic = utils.download_file(profile_pic_url)
+        if profile_pic_url is not None:
+            portfolio.profile_pic = utils.download_file(profile_pic_url)
 
         # if background_cover_url is not None:
         #     portfolio.background_cover_image = utils.download_file(background_cover_url)
