@@ -235,13 +235,15 @@ def fetch_linkedin_profile(linkedin_url):
                 chat(f"{CHATGPT_SUMMARY_PROMPT}\n\n{chatgpt_context}")
             )
 
-        skills = (
-            chat(f"{CHATGPT_SKILLS_PROMPT}\n\n{chatgpt_context}")
-            .replace("\n", "")
-            .strip("- ")
-            .split("- ")
-        )
-        linkedin_data["skills"] = [{"title": _clean_str(skill)} for skill in skills]
+        chatgpt_skills_response = chat(f"{CHATGPT_SKILLS_PROMPT}\n\n{chatgpt_context}")
+        if "- " in chatgpt_skills_response:
+            skills = (
+                chatgpt_skills_response
+                .replace("\n", "")
+                .strip("- ")
+                .split("- ")
+            )
+            linkedin_data["skills"] = [{"title": _clean_str(skill)} for skill in skills]
     except ServiceUnavailableError:
         pass
     return linkedin_data
