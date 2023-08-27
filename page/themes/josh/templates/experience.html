@@ -29,7 +29,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                             <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'experience' %}">Experience</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'experience' %}">Experience & Skills</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'awards' %}">Awards</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
                         </ul>
@@ -73,9 +73,13 @@
                             </div>
                             {% endfor %}
                         </section>
+                        <!-- Divider-->
+                        <div class="pb-1"></div>
                         <!-- Education Section-->
                         <section>
-                            <h2 class="text-secondary fw-bolder mb-4">Education</h2>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h2 class="text-secondary fw-bolder mb-0">Education</h2>
+                            </div>
                             {% for education in portfolio.portfolioeducation.all %}
                             <!-- Education Card 1-->
                             <div class="card shadow border-0 rounded-4 mb-5">
@@ -110,7 +114,10 @@
                         <!-- Divider-->
                         <div class="pb-1"></div>
                         <!-- Volunteer Work Section-->
-                        <h2 class="text-primary fw-bolder mb-4">Volunteer Work</h2>
+                        <section>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h2 class="text-primary fw-bolder mb-0">Volunteer Work</h2>
+                            </div>
                             {% for volunteer_work in portfolio.portfoliovolunteerwork.all %}
                             <!-- Volunteer Work Card 1-->
                             <div class="card shadow border-0 rounded-4 mb-5">
@@ -137,7 +144,30 @@
                                 </div>
                             </div>
                             {% endfor %}
+                        </section>
+                        <!-- Divider-->
+                        <div class="pb-1"></div>
+                        <!-- Skills Section-->
                         <section>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h2 class="text-secondary fw-bolder mb-0">Skills Gained</h2>
+                            </div>
+                            <!-- Skills Card -->
+                            <div class="card shadow border-0 rounded-4 mb-5">
+                                <div class="card-body p-5">
+                                    <div class="row align-items-center gx-5">
+                                        <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                            {% for sk in portfolio.portfolioskill.all %}
+                                        <div class="col-lg-8"><div>
+                                            <li>
+                                                <span class="fa-li"><i class="fas fa-check"></i></span>
+                                                {{sk.title}}
+                                            </li>
+                                        </div></div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
                         </section>
                     </div>
                 </div>

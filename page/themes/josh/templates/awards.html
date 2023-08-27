@@ -24,12 +24,12 @@
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
                 <div class="container px-5">
-                    <a class="navbar-brand" href="{% url 'index' %}"><span class="fw-bolder text-primary">Start Bootstrap</span></a>
+                    <a class="navbar-brand" href="{% url 'index' %}"><span class="fw-bolder text-primary">{{ portfolio.first_name }} {{ portfolio.last_name }}</span></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                             <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'experience' %}">Experience</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'experience' %}">Experience & Skills</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'awards' %}">Awards</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
                         </ul>
@@ -40,10 +40,11 @@
             <section class="py-5">
                 <div class="container px-5 mb-5">
                     <div class="text-center mb-5">
-                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Awards</span></h1>
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Awards & Certifications</span></h1>
                     </div>
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-11 col-xl-9 col-xxl-8">
+                            {% if portfolio.portfoliohonoraward %}
                             {% for award in portfolio.portfoliohonoraward.all %}
                             <!-- Project Card 1-->
                             <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
@@ -57,6 +58,21 @@
                                 </div>
                             </div>
                             {% endfor %}
+                            {% endif %}
+                            {% if portfolio.portfoliocertification %}
+                            {% for cert in portfolio.portfoliocertification.all %}
+                            <!-- Project Card 1-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <h2 class="fw-bolder">{{cert.title}} @ {{cert.organization}} (ID:{{cert.number}})</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
