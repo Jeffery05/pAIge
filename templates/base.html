@@ -19,13 +19,12 @@
         <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
             <header class="masthead mb-auto">
                 <div class="inner">
-                    <link
-                        rel="icon"
-                        href="{% static 'images/pAIge_Logo.png' %}"
-                        type="image/icon type"
-                    />
-                    <nav class="nav nav-masthead justify-content-center">
-                        <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                    <a href="{% url 'index' %}">
+                        <image src="{% static 'images/pAIgenator_logo.png' %}" style="width: 140px; height: 70px; margin-right:75%;"></image>
+                    </link>
+                    
+                    <nav class="nav nav-masthead justify-content-center" style="font-size:larger">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
                         <a class="nav-link" href="{% url 'about' %}">About</a>
                         <a class="nav-link" href="{% url 'generate' %}">Generate</a>
                     </nav>
@@ -41,7 +40,7 @@
             </div>
 
             <footer class="bg-dark text-white text-center py-3">
-                &copy; 2023 AI Personal Website Generator
+                &copy; 2023 pAIgenator - Ignition Hacks 2023
             </footer>
         </div>
 

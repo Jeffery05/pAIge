@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block main %}
+
 <h1 class="mb-4">Generate Your Website Now!</h1>
 {% comment %} <form method="POST" action="{% url 'submitted' %}"> {% endcomment %}
 <form method="POST" action="{% url 'generate' %}">
@@ -24,4 +25,5 @@
     Submit
   </button> {% endcomment %}
 </form>
+<p style="margin-top:25px;"></p><i>ex. https://www.linkedin.com/in/john-doe</i></p>
 {% endblock %}

@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block main %}
-<h1>Welcome to pAIge</h1>
-<p class="mb-4">Create your stunning personal website with just one click!</p>
+<image src="{% static 'images/pAIgenator_logo.png' %}" style="width: 80%; height: 80%; margin-bottom:25px; margin-top:-20%"></image>
+<h1>Welcome to pAIgenator</h1>
+<p class="mb-4">Create a stunning personal website using your LinkedIn!</p>
 <p class="lead">
     <a href="{% url 'about' %}" class="btn btn-lg btn-secondary">Learn more</a>
 </p>
